@@ -27,6 +27,9 @@
 #include <stdexcept>
 #include <vector>
 
+#include <tinygettext/po_parser.hpp>
+#include <tinygettext/unix_file_system.hpp>
+
 #include "audio/sound_manager.hpp"
 #include "control/input_manager.hpp"
 #include "gui/menu.hpp"
@@ -38,6 +41,7 @@
 #include "object/background.hpp"
 #include "object/decal.hpp"
 #include "object/tilemap.hpp"
+#include "physfs/ifile_stream.hpp"
 #include "physfs/ifile_streambuf.hpp"
 #include "scripting/scripting.hpp"
 #include "scripting/squirrel_error.hpp"
@@ -134,6 +138,45 @@ WorldMap::WorldMap(const std::string& filename, Savegame& savegame, const std::s
   sq_pop(global_vm, 1);
 
   SoundManager::current()->preload("sounds/warp.wav");
+
+  std::string lang_file_name = FileSystem::join(FileSystem::dirname(filename), g_dictionary_manager->get_language().get_language() + ".po");
+  PHYSFS_file* lang_file = PHYSFS_openRead(lang_file_name.c_str());
+  if(lang_file)
+  {
+    std::string full_path = FileSystem::join(PHYSFS_getRealDir(lang_file_name.c_str()), lang_file_name);
+    using namespace tinygettext;
+    char* dictionary_contents = new char[PHYSFS_fileLength(lang_file) + 1];
+    PHYSFS_read(lang_file, dictionary_contents, 1, PHYSFS_fileLength(lang_file));
+    std::stringstream dictionary_contents_str(dictionary_contents);
+    dictionary_contents += '\0';
+    log_debug << dictionary_contents << std::endl;
+    Dictionary dict;
+    try {
+      POParser::parse(full_path.c_str(), dictionary_contents_str, dict);
+    }
+    catch(...)
+    {
+      log_warning << "The PO parser failed to parse the file!" << std::endl;
+    }
+    g_dictionary_manager->get_dictionary().addFallback(&dict);
+    PHYSFS_close(lang_file);
+    delete dictionary_contents;
+  }
+  //std::unique_ptr<UnixFileSystem> filesystem = std::unique_ptr<UnixFileSystem>(new UnixFileSystem());
+  //std::unique_ptr<std::istream> lang_file_stream = filesystem->open_file(lang_file_name.c_str());
+  /*  using namespace tinygettext;
+  if (lang_file_stream)
+  {
+      if(!*lang_file_stream.get()) {
+        log_debug << "Couldn't access stream!" << std::endl;
+        log_debug << "Tried " << lang_file_name << std::endl;
+      }
+      else {
+          Dictionary dict;
+    POParser::parse(lang_file_name, *lang_file_stream.get(), dict);
+    g_dictionary_manager->get_dictionary().addFallback(&dict);
+      }
+  }*/
 
   // load worldmap objects
   load(filename);
