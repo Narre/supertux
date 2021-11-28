@@ -32,6 +32,7 @@
 #include "util/file_system.hpp"
 #include "util/gettext.hpp"
 #include "util/log.hpp"
+#include "worldmap/worldmap.hpp"
 
 ContribMenu::ContribMenu() :
   m_contrib_worlds()
@@ -157,7 +158,8 @@ ContribMenu::ContribMenu() :
           }
           else
           {
-            title << " - " << wm_filename << " (" << solved_count << "/" << level_count << ")";
+            auto worldmap = std::make_unique<worldmap::WorldMap>(wm_filename, *savegame);
+            title << " - " << worldmap->get_title() << " (" << solved_count << "/" << level_count << ")";
           }
           std::ostringstream desc;
           desc << world->get_description();
