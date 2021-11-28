@@ -133,7 +133,10 @@ ContribMenu::ContribMenu() :
           int level_count = 0;
           int solved_count = 0;
 
-          const auto& state = savegame->get_worldmap_state(world->get_worldmap_filename());
+          std::string wm_filename = savegame->get_player_status().last_worldmap;
+          if(wm_filename == "") wm_filename = "/" + world->get_worldmap_filename();
+
+          const auto& state = savegame->get_worldmap_state(wm_filename);
           for (const auto& level_state : state.level_states)
           {
             if (level_state.filename.empty())
@@ -154,7 +157,7 @@ ContribMenu::ContribMenu() :
           }
           else
           {
-            title << " (" << solved_count << "/" << level_count << ")";
+            title << " - " << wm_filename << " (" << solved_count << "/" << level_count << ")";
           }
           std::ostringstream desc;
           desc << world->get_description();
