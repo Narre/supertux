@@ -158,6 +158,8 @@ ContribMenu::ContribMenu() :
           }
           else
           {
+            //TODO replace this with something simpler
+            //creating an instance of WorldMap for every world in the list is extremely inefficient
             auto worldmap = std::make_unique<worldmap::WorldMap>(wm_filename, *savegame);
             if (world->get_title() == worldmap->get_title())
             {
