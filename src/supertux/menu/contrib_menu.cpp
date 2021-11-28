@@ -159,7 +159,14 @@ ContribMenu::ContribMenu() :
           else
           {
             auto worldmap = std::make_unique<worldmap::WorldMap>(wm_filename, *savegame);
-            title << " - " << worldmap->get_title() << " (" << solved_count << "/" << level_count << ")";
+            if (world->get_title() == worldmap->get_title())
+            {
+              title << " (" << solved_count << "/" << level_count << ")";
+            }
+            else
+            {
+              title << " - " << worldmap->get_title() << " (" << solved_count << "/" << level_count << ")";
+            }
           }
           std::ostringstream desc;
           desc << world->get_description();
