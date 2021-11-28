@@ -108,13 +108,21 @@ ContribMenu::ContribMenu() :
 
             if (level_state.solved)
             {
-              solved_count += 1;
+              ++solved_count;
             }
-            level_count += 1;
+            ++level_count;
           }
 
           std::ostringstream title;
           title << "[" << world->get_title() << "]";
+          if (!level_count)
+          {
+            title << " " << _("*NEW*");
+          }
+          else
+          {
+            title << " (" << solved_count << "/" << level_count << ")";
+          }
           std::ostringstream desc;
           desc << world->get_description();
           add_entry(i++, title.str()).set_help(desc.str());
@@ -133,13 +141,21 @@ ContribMenu::ContribMenu() :
 
             if (level_state.solved)
             {
-              solved_count += 1;
+              ++solved_count;
             }
-            level_count += 1;
+            ++level_count;
           }
 
           std::ostringstream title;
           title << world->get_title();
+          if (!level_count)
+          {
+            title << " " << _("*NEW*");
+          }
+          else
+          {
+            title << " (" << solved_count << "/" << level_count << ")";
+          }
           std::ostringstream desc;
           desc << world->get_description();
           add_entry(i++, title.str()).set_help(desc.str());
