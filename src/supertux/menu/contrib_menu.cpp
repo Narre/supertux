@@ -122,7 +122,7 @@ ContribMenu::ContribMenu() :
           }
           else
           {
-            title << " (" << solved_count << "/" << level_count << ")";
+            title << " (" << solved_count << "/" << level_count << "; " << 100 * solved_count / level_count << "%)";
           }
           std::ostringstream desc;
           desc << world->get_description();
@@ -163,11 +163,11 @@ ContribMenu::ContribMenu() :
             auto worldmap = std::make_unique<worldmap::WorldMap>(wm_filename, *savegame);
             if (world->get_title() == worldmap->get_title())
             {
-              title << " (" << solved_count << "/" << level_count << ")";
+              title << " (" << solved_count << "/" << level_count << "; " << 100 * solved_count / level_count << "%)";
             }
             else
             {
-              title << " - " << worldmap->get_title() << " (" << solved_count << "/" << level_count << ")";
+              title << " - " << worldmap->get_title() << " (" << solved_count << "/" << level_count << "; " << 100 * solved_count / level_count << "%)";
             }
           }
           std::ostringstream desc;
