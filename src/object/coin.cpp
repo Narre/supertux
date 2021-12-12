@@ -50,7 +50,7 @@ Coin::Coin(const ReaderMapping& reader) :
   m_collect_script(),
   m_starting_node(0)
 {
-  reader.get("starting-node", m_starting_node, 0.f);
+  reader.get("starting-node", m_starting_node, 0);
 
   init_path(reader, true);
 
@@ -64,8 +64,11 @@ Coin::finish_construction()
 {
   if (get_path())
   {
-    Vector v = get_path()->get_base();
-    set_pos(v);
+    if (m_starting_node >= static_cast<int>(get_path()->get_nodes().size()))
+      m_starting_node = static_cast<int>(get_path()->get_nodes().size()) - 1;
+
+    set_pos(get_path()->get_nodes()[m_starting_node].position);
+    get_walker()->jump_to_node(m_starting_node);
   }
 
   m_add_path = get_walker() && get_path() && get_path()->is_valid();
