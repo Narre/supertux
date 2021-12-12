@@ -134,7 +134,7 @@ ContribMenu::ContribMenu() :
           int level_count = 0;
           int solved_count = 0;
 
-          std::string wm_filename = savegame->get_player_status().last_worldmap;
+          auto wm_filename = savegame->get_player_status().last_worldmap;
           if(wm_filename == "") wm_filename = "/" + world->get_worldmap_filename();
 
           const auto& state = savegame->get_worldmap_state(wm_filename);
@@ -158,16 +158,14 @@ ContribMenu::ContribMenu() :
           }
           else
           {
-            //TODO replace this with something simpler
-            //creating an instance of WorldMap for every world in the list is extremely inefficient
-            auto worldmap = std::make_unique<worldmap::WorldMap>(wm_filename, *savegame);
-            if (world->get_title() == worldmap->get_title())
+            auto wm_title = savegame->get_player_status().last_worldmap_title;
+            if (wm_title.empty() || world->get_title() == wm_title)
             {
               title << " (" << solved_count << "/" << level_count << "; " << 100 * solved_count / level_count << "%)";
             }
             else
             {
-              title << " - " << worldmap->get_title() << " (" << solved_count << "/" << level_count << "; " << 100 * solved_count / level_count << "%)";
+              title << " - " << wm_title << " (" << solved_count << "/" << level_count << "; " << 100 * solved_count / level_count << "%)";
             }
           }
           std::ostringstream desc;
