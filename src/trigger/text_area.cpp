@@ -66,7 +66,8 @@ TextArea::TextArea(const Vector& pos) :
   m_current_text(0),
   m_status(Status::NOT_STARTED),
   m_timer(),
-  m_anchor(AnchorPoint::ANCHOR_MIDDLE)
+  m_anchor(AnchorPoint::ANCHOR_MIDDLE),
+  m_anchor_offset()
 {
   m_col.m_bbox.set_pos(pos);
   m_col.m_bbox.set_size(32, 32);

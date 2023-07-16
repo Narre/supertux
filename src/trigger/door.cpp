@@ -89,6 +89,7 @@ Door::Door(int x, int y, const std::string& sector, const std::string& spawnpoin
   unlocking_timer(),
   lock_warn_timer(),
   m_flip(NO_FLIP),
+  m_locked(),
   lock_color()
 {
   state = m_locked ? DoorState::LOCKED : DoorState::CLOSED;
