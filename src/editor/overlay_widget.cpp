@@ -322,7 +322,7 @@ namespace {
       }
     }
     return positions;
-  };
+  }
 }  // namespace
 
 void
