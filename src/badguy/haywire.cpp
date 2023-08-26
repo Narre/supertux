@@ -35,10 +35,15 @@ const float NORMAL_WALK_SPEED = 80.0f;
 const float EXPLODING_WALK_SPEED = 250.0f;
 const float SKID_TIME = 0.3f;
 
-} // namespace
+}
 
 Haywire::Haywire(const ReaderMapping& reader) :
-  WalkingBadguy(reader, "images/creatures/haywire/haywire.sprite", "left", "right"),
+  Haywire(reader, "images/creatures/haywire/haywire.sprite")
+{
+}
+
+Haywire::Haywire(const ReaderMapping& reader, const std::string& spritename) :
+  WalkingBadguy(reader, spritename, "left", "right"),
   is_exploding(false),
   time_until_explosion(0.0f),
   is_stunned(false),

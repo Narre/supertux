@@ -19,13 +19,15 @@
 #define HEADER_SUPERTUX_BADGUY_HAYWIRE_HPP
 
 #include "badguy/walking_badguy.hpp"
+#include "audio/sound_source.hpp"
 
-class SoundSource;
+//class SoundSource;
 
-class Haywire final : public WalkingBadguy
+class Haywire : public WalkingBadguy
 {
 public:
   Haywire(const ReaderMapping& reader);
+  Haywire(const ReaderMapping& reader, const std::string& spritename);
 
   virtual void kill_fall() override;
   virtual void ignite() override;
@@ -51,14 +53,18 @@ protected:
   virtual bool collision_squished(GameObject& object) override;
   virtual void collision_solid(const CollisionHit& hit) override;
 
+protected:
+  void start_exploding();
+
 private:
   Direction get_player_direction(const Player* player) const;
 
-  void start_exploding();
   void stop_exploding();
 
-private:
+protected:
   bool is_exploding;
+
+private:
   float time_until_explosion;
   bool is_stunned;
   float time_stunned;
@@ -67,6 +73,8 @@ private:
   bool m_jumping;
   Timer m_skid_timer;
   Direction m_last_player_direction;
+
+protected:
 
   std::unique_ptr<SoundSource> ticking;
   std::unique_ptr<SoundSource> grunting;

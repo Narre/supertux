@@ -34,6 +34,9 @@
     (class "haywire")
     (icon "images/creatures/haywire/left-0.png"))
   (object
+    (class "crystal_haywire")
+    (icon "images/creatures/crystal_haywire/left-0.png"))
+  (object
     (class "short_fuse")
     (icon "images/creatures/short_fuse/short_fuse-0.png"))
   (object

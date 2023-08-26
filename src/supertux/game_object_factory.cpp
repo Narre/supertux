@@ -21,6 +21,7 @@
 #include "badguy/bouncing_snowball.hpp"
 #include "badguy/captainsnowball.hpp"
 #include "badguy/crusher.hpp"
+#include "badguy/crystal_haywire.hpp"
 #include "badguy/crystallo.hpp"
 #include "badguy/dart.hpp"
 #include "badguy/darttrap.hpp"
@@ -187,6 +188,7 @@ GameObjectFactory::init_factories()
   add_factory<Ghoul>("ghoul", OBJ_PARAM_DISPENSABLE);
   add_factory<GoldBomb>("goldbomb", OBJ_PARAM_PORTABLE | OBJ_PARAM_DISPENSABLE);
   add_factory<Haywire>("haywire", OBJ_PARAM_DISPENSABLE);
+  add_factory<CrystalHaywire>("crystal-haywire", OBJ_PARAM_DISPENSABLE);
   add_factory<Iceflame>("iceflame", OBJ_PARAM_DISPENSABLE);
   add_factory<Igel>("igel", OBJ_PARAM_DISPENSABLE);
   add_factory<Ispy>("ispy");
